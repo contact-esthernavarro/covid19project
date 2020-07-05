@@ -28,7 +28,7 @@ export class ChartcontainerComponent implements OnInit {
       events: { load: this.currentFunc() }
     },
     title: { text: 'Covid-19 Report' },
-    subtitle: { text: 'The most recent COVID data for the US'},
+    subtitle: { text: 'The most recent COVID data for the US' },
     xAxis: {
       labels: { enabled: true },
       categories: ['positive', 'death', 'hospitalized', 'recovered']
@@ -53,15 +53,15 @@ export class ChartcontainerComponent implements OnInit {
       events: { load: this.dailyFunc() }
     },
     title: { text: 'Daily Occurence Recorded' },
-    subtitle: { text: 'All COVID data for the US'},
+    subtitle: { text: 'All COVID data for the US' },
     xAxis: {
-      title: {text: 'Date'},
-      labels: {enabled: true},
-      reversed: {enabled: true},
+      title: { text: 'Date' },
+      labels: { enabled: true },
+      reversed: { enabled: true },
       categories: this.dateSet
     },
     yAxis: {
-      title: {text: 'Number of Cases' }
+      title: { text: 'Number of Cases' }
     },
     series: [
       {
@@ -83,15 +83,15 @@ export class ChartcontainerComponent implements OnInit {
       events: { load: this.statesFunc() }
     },
     title: { text: 'Current values for All States - Covid-19 Report' },
-    subtitle: { text: 'The most recent COVID data for every state'},
+    subtitle: { text: 'The most recent COVID data for every state' },
     xAxis: {
-      title: {text: 'State'},
-      labels: {enabled: true},
+      title: { text: 'State' },
+      labels: { enabled: true },
       categories: this.statesSet
     },
     yAxis: {
       title: 'Number of Cases',
-      labels: {enabled: true},
+      labels: { enabled: true },
     },
     series: [
       {
@@ -113,17 +113,17 @@ export class ChartcontainerComponent implements OnInit {
 
   currentFunc() {
     this.pullDataByCurrent();
-    setInterval(this.pullDataByCurrent, 15000);
+    setInterval(this.pullDataByCurrent, 3600000);
   }
 
-  statesFunc(){
+  statesFunc() {
     this.pullDataByStates();
-    setInterval(this.pullDataByStates, 15000);
+    setInterval(this.pullDataByStates, 3600000);
   }
 
-  dailyFunc(){
+  dailyFunc() {
     this.pullDataByDaily();
-    setInterval(this.pullDataByDaily, 15000);
+    setInterval(this.pullDataByDaily, 3600000);
   }
 
   async pullDataByStates() {
@@ -137,16 +137,13 @@ export class ChartcontainerComponent implements OnInit {
       const series_A = chart.series[0];
       const series_B = chart.series[1];
 
-      //map through states results array
       data.map((val) => {
         positiveDataSet.push([val.state, val.positiveIncrease]);
-        deathDataSet.push([val.state, val.deathIncrease]);  
+        deathDataSet.push([val.state, val.deathIncrease]);
         this.statesSet.push(val.state);
       })
 
-
-      series_A.setData(positiveDataSet,true,true,true);
-      // series_B.setData(deathDataSet,true,true,true);
+      series_A.setData(positiveDataSet, true, true, true);
     }
   }
 
@@ -159,7 +156,7 @@ export class ChartcontainerComponent implements OnInit {
       const dataSet = [data[0].positive, data[0].death, data[0].hospitalized, data[0].recovered];
       const series_0 = chart.series[0];
       const shift = series_0.data.length > 20;
-      
+
       dataSet.map((val) => {
         series_0.addPoint(val, true, shift)
       })
@@ -176,22 +173,21 @@ export class ChartcontainerComponent implements OnInit {
       const series_0 = chart.series[0];
       const series_1 = chart.series[1];
 
-      //map through array of daily results
       data.map((val) => {
-        positiveDataSet.push([this.formatDate(val.date),val.positiveIncrease]);
-        deathDataSet.push([this.formatDate(val.date), val.deathIncrease]);  
-        this.dateSet.push(this.formatDate(val.date)) 
+        positiveDataSet.push([this.formatDate(val.date), val.positiveIncrease]);
+        deathDataSet.push([this.formatDate(val.date), val.deathIncrease]);
+        this.dateSet.push(this.formatDate(val.date))
       })
-      
-      series_0.setData(positiveDataSet,true,true,true);
-      series_1.setData(deathDataSet,true,true,true);
+
+      series_0.setData(positiveDataSet, true, true, true);
+      series_1.setData(deathDataSet, true, true, true);
     }
   }
 
-  formatDate(val){
+  formatDate(val) {
     let str = val.toString();
-    let month = str.substring(4,6);
-    let day = str.substring(6,8);
+    let month = str.substring(4, 6);
+    let day = str.substring(6, 8);
     return `${month}-${day}`
   }
 
