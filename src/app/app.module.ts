@@ -5,12 +5,14 @@ import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
 import { ClockComponent } from './clock/clock.component';
 import { ChartcontainerComponent } from './chartcontainer/chartcontainer.component';
+import { NearbyComponent } from './nearby/nearby.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     ClockComponent,
-    ChartcontainerComponent
+    ChartcontainerComponent,
+    NearbyComponent
   ],
   imports: [
     BrowserModule,
