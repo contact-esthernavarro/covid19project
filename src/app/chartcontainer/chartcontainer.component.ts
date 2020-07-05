@@ -122,12 +122,12 @@ export class ChartcontainerComponent implements OnInit {
 
   statesFunc(){
     this.pullDataByStates();
-    // setInterval(this.pullDataByStates, 15000);
+    setInterval(this.pullDataByStates, 15000);
   }
 
   dailyFunc(){
     this.pullDataByDaily();
-    // setInterval(this.pullDataByDaily, 15000);
+    setInterval(this.pullDataByDaily, 15000);
   }
 
   async pullDataByStates() {
