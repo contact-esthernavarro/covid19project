@@ -95,13 +95,9 @@ export class ChartcontainerComponent implements OnInit {
     },
     series: [
       {
-        name: 'Number of Positive Cases',
+        name: 'Number of Positive Cases Per Day',
         data: [],
-        color: 'orange',
-      },
-      {
-        name: 'Number of Deaths',
-        data: []
+        color: 'orange'
       }
     ],
     legend: { enabled: true }
@@ -150,7 +146,7 @@ export class ChartcontainerComponent implements OnInit {
 
 
       series_A.setData(positiveDataSet,true,true,true);
-      series_B.setData(deathDataSet,true,true,true);
+      // series_B.setData(deathDataSet,true,true,true);
     }
   }
 
