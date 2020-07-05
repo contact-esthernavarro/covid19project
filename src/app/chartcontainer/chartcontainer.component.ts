@@ -117,7 +117,7 @@ export class ChartcontainerComponent implements OnInit {
 
   currentFunc() {
     this.pullDataByCurrent();
-    // setInterval(this.pullDataByCurrent, 15000);
+    setInterval(this.pullDataByCurrent, 15000);
   }
 
   statesFunc(){
