@@ -20,8 +20,8 @@ export class ChartcontainerComponent implements OnInit {
 
   dateSet = [];
   statesSet = [];
-  selectedState = 'al';
-  state = '';
+  selectedState = 'ca';
+  state = { name: 'California', abbreviation: 'ca'};
   dateLastModified;
 
   //chart config for current stats
@@ -114,8 +114,8 @@ export class ChartcontainerComponent implements OnInit {
       type: 'line',
       events: { load: this.indivStateFunc() }
     },
-    title: { text: 'Current values for Individual State' },
-    subtitle: { text: 'The most recent COVID data for selected state' },
+    title: {text: `Historic values for state of ${this.state.name}` },
+    subtitle: { text: 'The most recent COVID data per state' },
     xAxis: {
       title: { text: 'Date' },
       labels: { enabled: true },

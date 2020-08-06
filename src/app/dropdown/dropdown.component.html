@@ -1,16 +1,21 @@
-<form class="example-form text-center">
-  <mat-form-field class="example-full-width">
-    <input type="text"
-           placeholder="Current State Selected"
-           aria-label="Number"
-           matInput
-           [formControl]="myControl"
-           [matAutocomplete]="auto"
-           >
-    <mat-autocomplete #auto="matAutocomplete">
-      <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
-        {{option}}
-      </mat-option>
-    </mat-autocomplete>
-  </mat-form-field>
-</form>
+<div class="row">
+  <div class="col-sm-2"></div>
+  <div class="col-md-4">
+    <h5>Select By State</h5>
+    <p>Note on cases: Following guidance from the CDC, many US states and territories now report both lab-confirmed cases and probable cases of COVID-19. 
+      (To be considered a probable case, a patient must meet a specific combination of clinical, laboratory, or epidemiological criteria.) </p>
+  </div>
+  <div class="col-md-4">
+    <div class="text-center">
+      <mat-form-field appearance="fill">
+        <mat-select [(ngModel)]="selected.name" aria-placeholder="selected.name" [placeholder]="selected.name">
+          <mat-option *ngFor="let selection of selections" [value]="selection.abbreviation">
+            {{selection.name}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+  </div>
+</div>
+
+

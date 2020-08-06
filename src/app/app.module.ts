@@ -4,8 +4,9 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatSelectModule } from '@angular/material/select';
+import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import {MatFormFieldModule} from '@angular/material/form-field';
 
 import { AppComponent } from './app.component';
 import { ClockComponent } from './clock/clock.component';
@@ -30,8 +31,9 @@ import { DropdownComponent } from './dropdown/dropdown.component';
     BrowserModule,
     BrowserAnimationsModule,
     MatAutocompleteModule,
-    MatInputModule,
+    MatSelectModule,
     MatFormFieldModule,
+    MatInputModule,
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule

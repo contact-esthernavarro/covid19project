@@ -9,6 +9,7 @@ import { throwError } from 'rxjs';
 export class StateService {
 
   constructor(private http: HttpClient) { }
+  
 
   private handleError(error: HttpErrorResponse) {
     if (error.error instanceof ErrorEvent) {
@@ -24,5 +25,6 @@ export class StateService {
   getStates(){
     return this.http.get("assets/states.json").pipe( retry(3), catchError(this.handleError));
   }
+
 
 }
