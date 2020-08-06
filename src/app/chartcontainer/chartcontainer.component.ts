@@ -151,6 +151,7 @@ export class ChartcontainerComponent implements OnInit {
     this.dateUpdated();
   }
 
+  //functions for highcharts events
   currentFunc() {
     this.pullDataByCurrent();
     setInterval(this.pullDataByCurrent, 3600000);
@@ -172,7 +173,7 @@ export class ChartcontainerComponent implements OnInit {
   }
 
 
-
+  //Data fetch and Data series
   async pullDataByIndivState() {
     let result = await fetch(`https://covidtracking.com/api/v1/states/${this.selectedState}/daily.json`);
     if (result.ok) {
@@ -194,12 +195,10 @@ export class ChartcontainerComponent implements OnInit {
     }
   }
   
-
   async pullDataByStates() {
     let result = await fetch('https://covidtracking.com/api/v1/states/current.json');
     if (result.ok) {
       let data = await result.json();
-      console.log(data);
       let positiveDataSet = [];
       let deathDataSet = [];
       const chart = Highcharts.chart('statesContainer', this.options3);
@@ -215,13 +214,11 @@ export class ChartcontainerComponent implements OnInit {
       series_A.setData(positiveDataSet, true, true, true);
     }
   }
-  
 
   async pullDataByCurrent() {
     let result = await fetch('https://covidtracking.com/api/v1/us/current.json');
     if (result.ok) {
       let data = await result.json();
-      console.log(data)
       const chart = Highcharts.chart('container', this.options);
       const dataSet = [data[0].positive, data[0].death, data[0].hospitalized, data[0].recovered];
       const series_0 = chart.series[0];
@@ -258,19 +255,26 @@ export class ChartcontainerComponent implements OnInit {
     let result = await fetch('https://covidtracking.com/api/v1/us/current.json');
     if (result.ok) {
       let data = await result.json();
-      console.log('date',data[0]['date']);
+      // console.log('date',data[0]['date']);
       this.dateLastModified = this.formatDate(data[0].date);
     }
   }
 
 
-
+  //other internal functions
   formatDate(val) {
     let str = val.toString();
     let month = str.substring(4, 6);
     let day = str.substring(6, 8);
     let year = str.substring(0, 4);
     return `${month}-${day}-${year}`
+  }
+
+  onValueChange(event){
+    this.state = event;
+    this.selectedState = event.abbreviation.toLowerCase();
+    this.indivStateFunc();
+    this.options4.title = { text: `Historic values for state of ${this.state.name}`}
   }
 
 

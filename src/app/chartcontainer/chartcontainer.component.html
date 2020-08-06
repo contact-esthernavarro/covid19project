@@ -3,7 +3,7 @@
   <div id="statesContainer" style="width:90%; height:500px; margin: auto" class="text-center">
   </div>
 </div>
-<app-dropdown></app-dropdown>
+<app-dropdown [state]="state.name" (option)="onValueChange($event)"></app-dropdown>
 <div class="chart">
   <div id="indivStateContainer" style="width:90%; height:500px; margin: auto" class="text-center">
   </div>

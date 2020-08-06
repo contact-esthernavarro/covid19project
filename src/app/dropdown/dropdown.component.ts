@@ -1,6 +1,7 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { StateService } from '../state.service';
+import { MatSelectChange } from '@angular/material/select';
 
 
 @Component({
@@ -11,6 +12,9 @@ import { StateService } from '../state.service';
 
 export class DropdownComponent implements OnInit {
   
+  @Input() state: string;
+  @Output() selectionChange: EventEmitter<MatSelectChange>
+  @Output() option = new EventEmitter();
   myControl = new FormControl();
   selections;
   selected = {name: 'California', abbreviation: 'CA'};
@@ -20,12 +24,17 @@ export class DropdownComponent implements OnInit {
 
   ngOnInit(){
     this.getOptions();
+    
   }
 
   getOptions(){
     return this.stateService.getStates().subscribe((data) => {
       this.selections = data;
     })
+  }
+
+  onChange(event){
+    this.option.emit(event.value);
   }
 
 }
