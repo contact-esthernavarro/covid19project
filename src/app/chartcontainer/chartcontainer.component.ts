@@ -20,6 +20,9 @@ export class ChartcontainerComponent implements OnInit {
 
   dateSet = [];
   statesSet = [];
+  selectedState = 'al';
+  state = '';
+  dateLastModified;
 
   //chart config for current stats
   public options: any = {
@@ -27,7 +30,7 @@ export class ChartcontainerComponent implements OnInit {
       type: 'column',
       events: { load: this.currentFunc() }
     },
-    title: { text: 'Covid-19 Report' },
+    title: { text: 'Cumulative Covid-19 Report' },
     subtitle: { text: 'The most recent COVID data for the US' },
     xAxis: {
       labels: { enabled: true },
@@ -66,17 +69,19 @@ export class ChartcontainerComponent implements OnInit {
     series: [
       {
         name: 'Number of Positive Cases',
-        data: []
+        data: [],
+        color: 'orange'
       },
       {
         name: 'Number of Deaths',
-        data: []
+        data: [],
+        color: 'black'
       }
     ],
     legend: { enabled: true },
   }
 
-  //chart config for current stats
+  //chart config for current stats for 56 states
   public options3: any = {
     chart: {
       type: 'column',
@@ -103,12 +108,47 @@ export class ChartcontainerComponent implements OnInit {
     legend: { enabled: true }
   }
 
+  //chart config for individual state
+  public options4: any = {
+    chart: {
+      type: 'line',
+      events: { load: this.indivStateFunc() }
+    },
+    title: { text: 'Current values for Individual State' },
+    subtitle: { text: 'The most recent COVID data for selected state' },
+    xAxis: {
+      title: { text: 'Date' },
+      labels: { enabled: true },
+      reversed: { enabled: true },
+      categories: this.dateSet
+    },
+    yAxis: {
+      title: 'Number of Cases',
+      labels: { enabled: true },
+    },
+    series: [
+      {
+        name: 'Number of Positive Cases',
+        data: [],
+        color: 'orange'
+      },
+      {
+        name: 'Number of Deaths',
+        data: [],
+        color: 'black'
+      }
+    ],
+    legend: { enabled: true },
+  }
+
   constructor() { }
 
   ngOnInit() {
     Highcharts.chart('container', this.options);
     Highcharts.chart('lineContainer', this.options2);
     Highcharts.chart('statesContainer', this.options3);
+    Highcharts.chart('indivStateContainer', this.options4);
+    this.dateUpdated();
   }
 
   currentFunc() {
@@ -116,15 +156,44 @@ export class ChartcontainerComponent implements OnInit {
     setInterval(this.pullDataByCurrent, 3600000);
   }
 
+  dailyFunc() {
+    this.pullDataByDaily();
+    setInterval(this.pullDataByDaily, 3600000);
+  }
+
   statesFunc() {
     this.pullDataByStates();
     setInterval(this.pullDataByStates, 3600000);
   }
 
-  dailyFunc() {
-    this.pullDataByDaily();
-    setInterval(this.pullDataByDaily, 3600000);
+  indivStateFunc(){
+    this.pullDataByIndivState();
+    setInterval(this.pullDataByIndivState, 3600000);
   }
+
+
+
+  async pullDataByIndivState() {
+    let result = await fetch(`https://covidtracking.com/api/v1/states/${this.selectedState}/daily.json`);
+    if (result.ok) {
+      let positiveDataSet = [];
+      let deathDataSet = [];
+      let data = await result.json();
+      const chart = Highcharts.chart('indivStateContainer', this.options4);
+      const series_0 = chart.series[0];
+      const series_1 = chart.series[1];
+
+      data.map((val) => {
+        positiveDataSet.push([this.formatDate(val.date), val.positiveIncrease]);
+        deathDataSet.push([this.formatDate(val.date), val.deathIncrease]);
+        this.dateSet.push(this.formatDate(val.date))
+      })
+
+      series_0.setData(positiveDataSet, true, true, true);
+      series_1.setData(deathDataSet, true, true, true);
+    }
+  }
+  
 
   async pullDataByStates() {
     let result = await fetch('https://covidtracking.com/api/v1/states/current.json');
@@ -146,6 +215,7 @@ export class ChartcontainerComponent implements OnInit {
       series_A.setData(positiveDataSet, true, true, true);
     }
   }
+  
 
   async pullDataByCurrent() {
     let result = await fetch('https://covidtracking.com/api/v1/us/current.json');
@@ -184,11 +254,23 @@ export class ChartcontainerComponent implements OnInit {
     }
   }
 
+  async dateUpdated() {
+    let result = await fetch('https://covidtracking.com/api/v1/us/current.json');
+    if (result.ok) {
+      let data = await result.json();
+      console.log('date',data[0]['date']);
+      this.dateLastModified = this.formatDate(data[0].date);
+    }
+  }
+
+
+
   formatDate(val) {
     let str = val.toString();
     let month = str.substring(4, 6);
     let day = str.substring(6, 8);
-    return `${month}-${day}`
+    let year = str.substring(0, 4);
+    return `${month}-${day}-${year}`
   }
 
 
