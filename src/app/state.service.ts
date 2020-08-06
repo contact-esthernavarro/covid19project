@@ -19,10 +19,10 @@ export class StateService {
         `body was: ${error.error}`);
     }
     return throwError('Something bad happened; please try again later.');
-  };
+  }
 
   getStates(){
-    return this.http.get("assets/states.json").pipe( retry(3), catchError(this.handleError));
+    return this.http.get('assets/states.json').pipe( retry(3), catchError(this.handleError));
   }
 
 }

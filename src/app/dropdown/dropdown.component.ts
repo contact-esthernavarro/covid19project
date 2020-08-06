@@ -10,10 +10,9 @@ import { MatSelectChange } from '@angular/material/select';
   styleUrls: ['./dropdown.component.css']
 })
 
-export class DropdownComponent implements OnInit {
-  
+export class DropdownComponent implements OnInit {  
   @Input() state: string;
-  @Output() selectionChange: EventEmitter<MatSelectChange>
+  @Output() selectionChange: EventEmitter<MatSelectChange>;
   @Output() option = new EventEmitter();
   myControl = new FormControl();
   selections;
@@ -23,14 +22,13 @@ export class DropdownComponent implements OnInit {
   constructor(private stateService: StateService ) { }
 
   ngOnInit(){
-    this.getOptions();
-    
+    this.getOptions();    
   }
 
   getOptions(){
     return this.stateService.getStates().subscribe((data) => {
       this.selections = data;
-    })
+    });
   }
 
   onChange(event){
@@ -38,7 +36,6 @@ export class DropdownComponent implements OnInit {
   }
 
 }
-
   
 
 

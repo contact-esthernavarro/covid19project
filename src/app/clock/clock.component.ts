@@ -36,13 +36,13 @@ export class ClockComponent implements OnInit, OnDestroy {
   }
 
   addZero(val: number) {
-    return val < 10 ? "0" + val : val;
+    return val < 10 ? '0' + val : val;
   }
 
   formatHours(val: number) {
-    if(val > 12){
+    if (val > 12){
       return val - 12;
-    } else if(val == 0){
+    } else if (val === 0){
       return 12;
     } else{
       return val;
@@ -50,7 +50,7 @@ export class ClockComponent implements OnInit, OnDestroy {
   }
 
   isPm(val: number): string {
-    return val <= 12 ? "AM" : "PM";
+    return val <= 12 ? 'AM' : 'PM';
   }
 
   formatDate(val) {

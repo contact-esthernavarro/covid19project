@@ -2,9 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import * as Highcharts from 'highcharts';
 
 declare var require: any;
-let Boost = require('highcharts/modules/boost');
-let noData = require('highcharts/modules/no-data-to-display');
-let More = require('highcharts/highcharts-more');
+const Boost = require('highcharts/modules/boost');
+const noData = require('highcharts/modules/no-data-to-display');
+const More = require('highcharts/highcharts-more');
 
 Boost(Highcharts);
 noData(Highcharts);
@@ -24,7 +24,7 @@ export class ChartcontainerComponent implements OnInit {
   state = { name: 'California', abbreviation: 'ca'};
   dateLastModified;
 
-  //chart config for current stats
+  // chart config for current stats
   public options: any = {
     chart: {
       type: 'column',
@@ -47,9 +47,9 @@ export class ChartcontainerComponent implements OnInit {
       }
     ],
     legend: { enabled: true },
-  }
+  };
 
-  //chart config for daily stats
+  // chart config for daily stats
   public options2: any = {
     chart: {
       type: 'line',
@@ -79,9 +79,9 @@ export class ChartcontainerComponent implements OnInit {
       }
     ],
     legend: { enabled: true },
-  }
+  };
 
-  //chart config for current stats for 56 states
+  // chart config for current stats for 56 states
   public options3: any = {
     chart: {
       type: 'column',
@@ -106,9 +106,9 @@ export class ChartcontainerComponent implements OnInit {
       }
     ],
     legend: { enabled: true }
-  }
+  };
 
-  //chart config for individual state
+  // chart config for individual state
   public options4: any = {
     chart: {
       type: 'line',
@@ -139,7 +139,7 @@ export class ChartcontainerComponent implements OnInit {
       }
     ],
     legend: { enabled: true },
-  }
+  };
 
   constructor() { }
 
@@ -151,7 +151,7 @@ export class ChartcontainerComponent implements OnInit {
     this.dateUpdated();
   }
 
-  //functions for highcharts events
+  // functions for highcharts events
   currentFunc() {
     this.pullDataByCurrent();
     setInterval(this.pullDataByCurrent, 3600000);
@@ -173,9 +173,9 @@ export class ChartcontainerComponent implements OnInit {
   }
 
 
-  //Data fetch and Data series
+  // Data fetch and Data series
   async pullDataByIndivState() {
-    let result = await fetch(`https://covidtracking.com/api/v1/states/${this.selectedState}/daily.json`);
+    const result = await fetch(`https://covidtracking.com/api/v1/states/${this.selectedState}/daily.json`);
     if (result.ok) {
       let positiveDataSet = [];
       let deathDataSet = [];
@@ -196,7 +196,7 @@ export class ChartcontainerComponent implements OnInit {
   }
   
   async pullDataByStates() {
-    let result = await fetch('https://covidtracking.com/api/v1/states/current.json');
+    const result = await fetch('https://covidtracking.com/api/v1/states/current.json');
     if (result.ok) {
       let data = await result.json();
       let positiveDataSet = [];
@@ -216,7 +216,7 @@ export class ChartcontainerComponent implements OnInit {
   }
 
   async pullDataByCurrent() {
-    let result = await fetch('https://covidtracking.com/api/v1/us/current.json');
+    const result = await fetch('https://covidtracking.com/api/v1/us/current.json');
     if (result.ok) {
       let data = await result.json();
       const chart = Highcharts.chart('container', this.options);
@@ -231,7 +231,7 @@ export class ChartcontainerComponent implements OnInit {
   }
 
   async pullDataByDaily() {
-    let result = await fetch('https://covidtracking.com/api/v1/us/daily.json');
+    const result = await fetch('https://covidtracking.com/api/v1/us/daily.json');
     if (result.ok) {
       let positiveDataSet = [];
       let deathDataSet = [];
@@ -252,29 +252,29 @@ export class ChartcontainerComponent implements OnInit {
   }
 
   async dateUpdated() {
-    let result = await fetch('https://covidtracking.com/api/v1/us/current.json');
+    const result = await fetch('https://covidtracking.com/api/v1/us/current.json');
     if (result.ok) {
-      let data = await result.json();
+      const data = await result.json();
       // console.log('date',data[0]['date']);
       this.dateLastModified = this.formatDate(data[0].date);
     }
   }
 
 
-  //other internal functions
+  // other internal functions
   formatDate(val) {
-    let str = val.toString();
-    let month = str.substring(4, 6);
-    let day = str.substring(6, 8);
-    let year = str.substring(0, 4);
-    return `${month}-${day}-${year}`
+    const str = val.toString();
+    const month = str.substring(4, 6);
+    const day = str.substring(6, 8);
+    const year = str.substring(0, 4);
+    return `${month}-${day}-${year}`;
   }
 
   onValueChange(event){
     this.state = event;
     this.selectedState = event.abbreviation.toLowerCase();
     this.indivStateFunc();
-    this.options4.title = { text: `Historic values for state of ${this.state.name}`}
+    this.options4.title = { text: `Historic values for state of ${this.state.name}`};
   }
 
 
