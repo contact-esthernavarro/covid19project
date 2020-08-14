@@ -174,6 +174,7 @@ export class ChartcontainerComponent implements OnInit {
 
 
   // Data fetch and Data series
+  //TODO!!! refactor code: API call into service to avoid mutating state
   async pullDataByIndivState() {
     const result = await fetch(`https://covidtracking.com/api/v1/states/${this.selectedState}/daily.json`);
     if (result.ok) {
@@ -195,6 +196,7 @@ export class ChartcontainerComponent implements OnInit {
     }
   }
   
+  //TODO!!! refactor code: API call into service to avoid mutating state
   async pullDataByStates() {
     const result = await fetch('https://covidtracking.com/api/v1/states/current.json');
     if (result.ok) {
@@ -215,6 +217,7 @@ export class ChartcontainerComponent implements OnInit {
     }
   }
 
+  //TODO!!! refactor code: API call into service to avoid mutating state
   async pullDataByCurrent() {
     const result = await fetch('https://covidtracking.com/api/v1/us/current.json');
     if (result.ok) {
@@ -230,6 +233,7 @@ export class ChartcontainerComponent implements OnInit {
     }
   }
 
+  //TODO!!! refactor code: API call into service to avoid mutating state
   async pullDataByDaily() {
     const result = await fetch('https://covidtracking.com/api/v1/us/daily.json');
     if (result.ok) {
@@ -251,17 +255,17 @@ export class ChartcontainerComponent implements OnInit {
     }
   }
 
+  //TODO!!! refactor code: API call into service to avoid mutating state
   async dateUpdated() {
     const result = await fetch('https://covidtracking.com/api/v1/us/current.json');
     if (result.ok) {
       const data = await result.json();
-      // console.log('date',data[0]['date']);
       this.dateLastModified = this.formatDate(data[0].date);
     }
   }
 
 
-  // other internal functions
+  // date formatter function
   formatDate(val) {
     const str = val.toString();
     const month = str.substring(4, 6);
@@ -270,6 +274,7 @@ export class ChartcontainerComponent implements OnInit {
     return `${month}-${day}-${year}`;
   }
 
+  //updates individual state title once selected 'state' value changed
   onValueChange(event){
     this.state = event;
     this.selectedState = event.abbreviation.toLowerCase();
