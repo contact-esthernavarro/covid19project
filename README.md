@@ -1,7 +1,8 @@
 # App
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 9.1.4.
-Website link: http://covid19personalproject.s3-website-us-east-1.amazonaws.com
+AWS link: http://covid19personalproject.s3-website-us-east-1.amazonaws.com
+firebase link: https://covid19-b8785.firebaseapp.com/
 
 ## Development server
 

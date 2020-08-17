@@ -219,7 +219,7 @@ export class ChartcontainerComponent implements OnInit {
 
   //TODO!!! refactor code: API call into service to avoid mutating state
   async pullDataByCurrent() {
-    const result = await fetch('https:/api.covidtracking.com/v1/us/current.json');
+    const result = await fetch('https://api.covidtracking.com/v1/us/current.json');
     if (result.ok) {
       let data = await result.json();
       const chart = Highcharts.chart('container', this.options);
