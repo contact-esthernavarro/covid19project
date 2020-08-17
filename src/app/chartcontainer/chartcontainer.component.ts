@@ -176,7 +176,7 @@ export class ChartcontainerComponent implements OnInit {
   // Data fetch and Data series
   //TODO!!! refactor code: API call into service to avoid mutating state
   async pullDataByIndivState() {
-    const result = await fetch(`https://covidtracking.com/api/v1/states/${this.selectedState}/daily.json`);
+    const result = await fetch(`https://api.covidtracking.com/v1/states/${this.selectedState}/daily.json`);
     if (result.ok) {
       let positiveDataSet = [];
       let deathDataSet = [];
@@ -198,7 +198,7 @@ export class ChartcontainerComponent implements OnInit {
   
   //TODO!!! refactor code: API call into service to avoid mutating state
   async pullDataByStates() {
-    const result = await fetch('https://covidtracking.com/api/v1/states/current.json');
+    const result = await fetch('https://api.covidtracking.com/v1/states/current.json');
     if (result.ok) {
       let data = await result.json();
       let positiveDataSet = [];
@@ -219,7 +219,7 @@ export class ChartcontainerComponent implements OnInit {
 
   //TODO!!! refactor code: API call into service to avoid mutating state
   async pullDataByCurrent() {
-    const result = await fetch('https://covidtracking.com/api/v1/us/current.json');
+    const result = await fetch('https:/api.covidtracking.com/v1/us/current.json');
     if (result.ok) {
       let data = await result.json();
       const chart = Highcharts.chart('container', this.options);
@@ -235,7 +235,7 @@ export class ChartcontainerComponent implements OnInit {
 
   //TODO!!! refactor code: API call into service to avoid mutating state
   async pullDataByDaily() {
-    const result = await fetch('https://covidtracking.com/api/v1/us/daily.json');
+    const result = await fetch('https://api.covidtracking.com/v1/us/daily.json');
     if (result.ok) {
       let positiveDataSet = [];
       let deathDataSet = [];
@@ -257,7 +257,7 @@ export class ChartcontainerComponent implements OnInit {
 
   //TODO!!! refactor code: API call into service to avoid mutating state
   async dateUpdated() {
-    const result = await fetch('https://covidtracking.com/api/v1/us/current.json');
+    const result = await fetch('https://api.covidtracking.com/v1/us/current.json');
     if (result.ok) {
       const data = await result.json();
       this.dateLastModified = this.formatDate(data[0].date);
