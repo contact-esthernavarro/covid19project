@@ -222,6 +222,7 @@ export class ChartcontainerComponent implements OnInit {
     const result = await fetch('https://api.covidtracking.com/v1/us/current.json');
     if (result.ok) {
       let data = await result.json();
+      console.log('data', data)
       const chart = Highcharts.chart('container', this.options);
       const dataSet = [data[0].positive, data[0].death, data[0].hospitalized, data[0].recovered];
       const series_0 = chart.series[0];
